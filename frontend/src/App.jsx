@@ -6,6 +6,11 @@ const TMDB_IMAGE_BASE = "https://image.tmdb.org/t/p/w300";
 const TMDB_IMAGE_LARGE = "https://image.tmdb.org/t/p/w500";
 const TMDB_LOGO_BASE = "https://image.tmdb.org/t/p/w92";
 
+// Backend API URL: uses the live Render deployment.
+// Falls back to localhost automatically if running locally with `npm run dev`
+// and a .env.local file setting VITE_API_URL=http://127.0.0.1:8000
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://movie-recommender-chatbot-1.onrender.com";
+
 function MovieCard({ movie, onClick }) {
   return (
     <div className="movie-card" onClick={() => onClick(movie.id)}>
@@ -112,7 +117,7 @@ function MovieModal({ movieId, onClose }) {
     setError(false);
 
     axios
-      .get(`http://127.0.0.1:8000/movie/${movieId}`)
+      .get(`${API_BASE_URL}/movie/${movieId}`)
       .then((res) => {
         if (!cancelled) setDetails(res.data);
       })
@@ -242,7 +247,7 @@ export default function App() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/chat", {
+      const response = await axios.post(`${API_BASE_URL}/chat`, {
         message: text,
         known_titles: likedMovies,
       });
