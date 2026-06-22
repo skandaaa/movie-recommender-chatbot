@@ -1,0 +1,17 @@
+﻿# Environment variables (API keys - never commit these)
+.env
+backend/.env
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Node / React
+node_modules/
+frontend/dist/
+frontend/node_modules/
+
+# OS junk
+.DS_Store
+Thumbs.db
